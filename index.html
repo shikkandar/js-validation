@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <style>
+    .error {
+      color: red;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Registration Form</h2>
+
+  <form id="registrationForm" onsubmit="validateForm(event)">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+    <span id="nameError" class="error">Name is required and must be at least 3 characters</span>
+
+    <br>
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email">
+    <span id="emailError" class="error">Email is required</span>
+
+    <br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password">
+    <span id="passwordError" class="error">Password is required</span>
+
+    <br>
+
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" id="confirmPassword" name="confirmPassword">
+    <span id="confirmPasswordError" class="error">Confirm Password is required</span>
+
+    <br>
+
+    <input type="submit" value="Register">
+  </form>
+
+  <script>
+    function validateForm(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      // Reset error messages
+      document.getElementById('nameError').style.display = 'none';
+      document.getElementById('emailError').style.display = 'none';
+      document.getElementById('passwordError').style.display = 'none';
+      document.getElementById('confirmPasswordError').style.display = 'none';
+
+      // Get form values
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      var confirmPassword = document.getElementById('confirmPassword').value;
+
+      // Validate name is not empty
+      if (name.trim() === '') {
+        document.getElementById('nameError').style.display = 'block';
+        return false;
+      }
+
+      // Validate name length (minimum 3 characters)
+      if (name.length < 3) {
+        document.getElementById('nameError').innerHTML = 'Name must be at least 3 characters';
+        document.getElementById('nameError').style.display = 'block';
+        return false;
+      }
+
+      // Validate email
+      if (email.trim() === '') {
+        document.getElementById('emailError').innerHTML = 'Email is required';
+        document.getElementById('emailError').style.display = 'block';
+        return false;
+      }
+
+      // Additional email validation
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.trim())) {
+        document.getElementById('emailError').innerHTML = 'Invalid email format';
+        document.getElementById('emailError').style.display = 'block';
+        return false;
+      }
+
+      // Validate password
+      if (password === '') {
+        document.getElementById('passwordError').innerHTML = 'Password is required';
+        document.getElementById('passwordError').style.display = 'block';
+        return false;
+      }
+
+      // Validate password length (minimum 6 characters)
+      if (password.length < 6) {
+        document.getElementById('passwordError').innerHTML = 'Password must be at least 6 characters';
+        document.getElementById('passwordError').style.display = 'block';
+        return false;
+      }
+
+      // Validate confirmPassword
+      if (confirmPassword === '') {
+        document.getElementById('confirmPasswordError').style.display = 'block';
+        return false;
+      }
+
+      // Check if password and confirmPassword match
+      if (password !== confirmPassword) {
+        document.getElementById('confirmPasswordError').innerHTML = 'Passwords do not match';
+        document.getElementById('confirmPasswordError').style.display = 'block';
+        return false;
+      }
+
+      // Form is valid, continue with submission
+      alert('Registration successful!');
+    }
+  </script>
+
+</body>
+</html>
